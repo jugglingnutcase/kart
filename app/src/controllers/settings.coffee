@@ -11,14 +11,13 @@ class Settings extends Spine.Controller
   elements:
     '#retroarch_path': 'retroarchPathInput'
     '#roms_path': 'romsPathInput'
-    '#retro_mode': 'romsPathInput'
+    '#retro_mode': 'retroMode'
 
   events:
     'click #retroarch_path_button': 'browseRetroarchPath'
     'click #roms_path_button': 'browseRomsPath'
     'change #aspect': 'setAspect'
     'change #retro-mode': 'toggleRetroMode'
-    'click .settings-button': 'back'
 
   constructor: ->
     super
@@ -53,9 +52,6 @@ class Settings extends Spine.Controller
   toggleRetroMode: (e) ->
     @settings.setRetroMode($(e.currentTarget).is(':checked'))
 
-  back: (e) ->
-    app.back();
-    
   keyboardNav: (e) ->
 
     switch e.keyCode

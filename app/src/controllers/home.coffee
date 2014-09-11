@@ -22,7 +22,6 @@ class Home extends Spine.Controller
     'mouseleave .card': 'mouseleave'
     'mouseover .square': 'mouseover'
     'mouseleave .square': 'mouseleave'
-    'click .settings-button': 'showSettings'
 
 
   constructor: ->
@@ -65,7 +64,7 @@ class Home extends Spine.Controller
     body = $('body')
     imagePath = path.resolve(imagePath)
     imagePath = imagePath.replace(/\\/g, '\\\\') if path.sep is '\\'
-    imageValue = "url('file://#{imagePath}')"
+    imageValue = "url('file://#{imagePath.replace(/\s/g, '%20')}')"
 
     return if body.css('background-image').replace(/'/g, '') == imageValue.replace(/'/g, '')
 
@@ -88,6 +87,8 @@ class Home extends Spine.Controller
 
   cardFor: (game) ->
     data = {"imagePath": game.imagePath(), "title": game.name()}
+    data["centerTitle"] = game.name() if !game.imageExists()
+
     @view 'main/_card', data
 
   numberOfGames: ->
@@ -95,9 +96,6 @@ class Home extends Spine.Controller
 
   launchGame: (item) ->
     @retroArch.launchGame(@recentlyPlayed.games[item.index()])
-
-  showSettings: ->
-    app.showSettings()
 
   loadPlatforms: ->
     app.showPlatforms()
